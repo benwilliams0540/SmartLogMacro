@@ -99,7 +99,7 @@ public macro log(
     _ message: String,
     privacy: OSLogPrivacy = .auto,
     customLoggingFunction: ((LoggerCategory, String, OSLogType) -> Void)? = nil
-) = #externalMacro(module: "SmartLogMacroMacros", type: "Log")
+) = #externalMacro(module: "SmartLogMacroMacros", type: "SmartLog")
 
 /// Logs a message using the Swift Unified Logging system with `.public` privacy for all interpolated values,
 /// and optionally mirrors the message to a custom logging backend (e.g. Crashlytics).
@@ -130,4 +130,4 @@ public macro logPublic(
     _ logLevel: OSLogType,
     _ message: String,
     customLoggingFunction: ((LoggerCategory, String, OSLogType) -> Void)? = nil
-) = #externalMacro(module: "SmartLogMacroMacros", type: "LogPublic")
+) = #externalMacro(module: "SmartLogMacroMacros", type: "SmartLogPublic")

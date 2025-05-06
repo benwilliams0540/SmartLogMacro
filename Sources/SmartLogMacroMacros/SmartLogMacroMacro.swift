@@ -113,7 +113,7 @@ public struct Log: ExpressionMacro {
             return try ExprSyntax(validating: ExprSyntax(#"""
                 {
                 \#(logger).getLogger().log(level: \#(logLevel), \#(logMessageWithPrivacy))
-                \#(customLoggingFunction)(\#(logger).rawValue, \#(message), \#(logLevel))
+                \#(customLoggingFunction)(\#(logger), \#(message), \#(logLevel))
                 }()
                 """#))
         }
@@ -121,7 +121,7 @@ public struct Log: ExpressionMacro {
             if case SmartLogError.missingArgument(_) = error {
                 // custom logging not provided
                 return try ExprSyntax(validating: ExprSyntax(#"""
-                    LoggerCategory.\#(logger).getLogger().log(level: \#(logLevel), \#(logMessageWithPrivacy))
+                    \#(logger).getLogger().log(level: \#(logLevel), \#(logMessageWithPrivacy))
                     """#))
             }
             else {
