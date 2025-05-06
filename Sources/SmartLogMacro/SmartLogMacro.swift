@@ -44,7 +44,7 @@ public enum LoggerCategory: String, CaseIterable {
     case userLists = "User Lists"
     case bids = "Bids"
 
-    func getLogger() -> Logger {
+    public func getLogger() -> Logger {
         switch self {
         case .webSocket:
             return .webSocket

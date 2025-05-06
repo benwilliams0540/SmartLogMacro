@@ -66,7 +66,7 @@ public struct Log: ExpressionMacro {
             throw SmartLogError.trailingClosuresNotSupported
         }
         let message = try HelperFunctions.validate(args[2], argName:"message", allowedSyntaxes: [StringLiteralExprSyntax.self, MacroExpansionExprSyntax.self])
-        let logger = try HelperFunctions.validate(args[0], argName:"logger", allowedSyntaxes: [MemberAccessExprSyntax.self, DeclReferenceExprSyntax.self, FunctionCallExprSyntax.self], memberAccessBaseName: "Logger")
+        let logger = try HelperFunctions.validate(args[0], argName:"logger", allowedSyntaxes: [MemberAccessExprSyntax.self, DeclReferenceExprSyntax.self, FunctionCallExprSyntax.self], memberAccessBaseName: "LoggerCategory")
 
         let logLevel = try HelperFunctions.validate(args[1], argName:"logLevel", allowedSyntaxes: [MemberAccessExprSyntax.self, DeclReferenceExprSyntax.self, FunctionCallExprSyntax.self])
         var logMessageWithPrivacy:any ExprSyntaxProtocol
