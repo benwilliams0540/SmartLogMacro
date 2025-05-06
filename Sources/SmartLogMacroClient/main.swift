@@ -3,7 +3,7 @@ import OSLog
 
 struct Custom {
     func log(_ message:String) {
-        
+
     }
 }
 

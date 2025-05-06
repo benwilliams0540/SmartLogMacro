@@ -12,7 +12,7 @@ enum SmartLogError: Error {
 }
 
 fileprivate struct HelperFunctions {
-    
+
     static func extractNamed(_ argName: String, from args: LabeledExprListSyntax, allowedSyntaxes:[ExprSyntaxProtocol.Type]? = nil, memberAccessBaseName: String = "") throws -> ExprSyntaxProtocol {
         for arg in args {
             if case .identifier(argName) = arg.label?.tokenKind {
@@ -24,7 +24,7 @@ fileprivate struct HelperFunctions {
         }
         throw SmartLogError.missingArgument(argName)
     }
-    
+
     static func validate(_ arg: LabeledExprListSyntax.Element, argName:String, allowedSyntaxes:[ExprSyntaxProtocol.Type], memberAccessBaseName: String = "") throws -> ExprSyntaxProtocol {
         for t in allowedSyntaxes {
             if let v = arg.expression.as(t) {
@@ -42,7 +42,7 @@ fileprivate struct HelperFunctions {
         }
         throw SmartLogError.unsupportedSyntaxForArgument(argName)
     }
-    
+
     static func addBaseIfNeeded(to memberAccess: MemberAccessExprSyntax, base: String) -> MemberAccessExprSyntax {
         if memberAccess.base != nil {
             return memberAccess
@@ -67,7 +67,7 @@ public struct Log: ExpressionMacro {
         }
         let message = try HelperFunctions.validate(args[2], argName:"message", allowedSyntaxes: [StringLiteralExprSyntax.self, MacroExpansionExprSyntax.self])
         let logger = try HelperFunctions.validate(args[0], argName:"logger", allowedSyntaxes: [MemberAccessExprSyntax.self, DeclReferenceExprSyntax.self, FunctionCallExprSyntax.self], memberAccessBaseName: "Logger")
-        
+
         let logLevel = try HelperFunctions.validate(args[1], argName:"logLevel", allowedSyntaxes: [MemberAccessExprSyntax.self, DeclReferenceExprSyntax.self, FunctionCallExprSyntax.self])
         var logMessageWithPrivacy:any ExprSyntaxProtocol
         if let privacy = try? HelperFunctions.extractNamed("privacy", from: node.arguments, allowedSyntaxes: [MemberAccessExprSyntax.self]) as? MemberAccessExprSyntax, let message = message as? StringLiteralExprSyntax {
@@ -113,7 +113,7 @@ public struct Log: ExpressionMacro {
             return try ExprSyntax(validating: ExprSyntax(#"""
                 {
                 \#(logger).log(level: \#(logLevel), \#(logMessageWithPrivacy))
-                \#(customLoggingFunction)(\#(message))
+                \#(customLoggingFunction)(String(describing: \#(logger)), \#(message), \#(logLevel))
                 }()
                 """#))
         }
@@ -219,3 +219,4 @@ struct SmartLogMacroPlugin: CompilerPlugin {
         SmartLogPublic.self
     ]
 }
+

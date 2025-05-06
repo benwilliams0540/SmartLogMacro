@@ -32,7 +32,7 @@ public macro log(
     _ logLevel: OSLogType,
     _ message: String,
     privacy: OSLogPrivacy = .auto,
-    customLoggingFunction: ((String) -> Void)? = nil
+    customLoggingFunction: ((String, String, OSLogType) -> Void)? = nil
 ) = #externalMacro(module: "SmartLogMacroMacros", type: "Log")
 
 /// Logs a message using the Swift Unified Logging system with `.public` privacy for all interpolated values,
@@ -63,7 +63,7 @@ public macro logPublic(
     _ logger: Logger,
     _ logLevel: OSLogType,
     _ message: String,
-    customLoggingFunction: ((String) -> Void)? = nil
+    customLoggingFunction: ((String, String, OSLogType) -> Void)? = nil
 ) = #externalMacro(module: "SmartLogMacroMacros", type: "LogPublic")
 
 /// Logs a message using the Swift Unified Logging system and also forwards it to a predefined custom logging function (`SmartLogMacroCustomLogger.log`).
@@ -130,3 +130,4 @@ public macro smartLogPublic(
     _ logLevel: OSLogType,
     _ message: String
 ) = #externalMacro(module: "SmartLogMacroMacros", type: "SmartLogPublic")
+
