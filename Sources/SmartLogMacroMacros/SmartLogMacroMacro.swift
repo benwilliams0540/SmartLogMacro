@@ -112,7 +112,7 @@ public struct Log: ExpressionMacro {
             let customLoggingFunction = try HelperFunctions.extractNamed("customLoggingFunction", from: node.arguments, allowedSyntaxes: [DeclReferenceExprSyntax.self, MemberAccessExprSyntax.self])
             return try ExprSyntax(validating: ExprSyntax(#"""
                 {
-                \#(logger).getLogger().log(level: \#(logLevel), \#(logMessageWithPrivacy))
+                \#(logger).logger.log(level: \#(logLevel), \#(logMessageWithPrivacy))
                 \#(customLoggingFunction)(\#(logger), \#(message), \#(logLevel))
                 }()
                 """#))
@@ -121,7 +121,7 @@ public struct Log: ExpressionMacro {
             if case SmartLogError.missingArgument(_) = error {
                 // custom logging not provided
                 return try ExprSyntax(validating: ExprSyntax(#"""
-                    \#(logger).getLogger().log(level: \#(logLevel), \#(logMessageWithPrivacy))
+                    \#(logger).logger.log(level: \#(logLevel), \#(logMessageWithPrivacy))
                     """#))
             }
             else {

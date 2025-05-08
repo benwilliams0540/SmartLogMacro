@@ -2,11 +2,11 @@ import SmartLogMacro
 import OSLog
 
 struct Custom {
-    func log(_ message:String) {
+    public static func log(_ category: LoggerCategory, _ message: String, _ logLevel: OSLogType) {
 
     }
 }
 
 typealias SmartLogMacroCustomLogger = Custom
 
-//#smartLog(Logger(), .debug, "wow")
+//#log(.someLogCategory, .debug, "wow")
