@@ -1,8 +1,13 @@
 @_exported import OSLog
 
-public protocol LoggerCategory {
-    var displayName: String { get }
-    var logger: Logger { get }
+public struct LoggerCategory {
+    public var displayName: String
+    public var logger: Logger
+
+    public init(displayName: String, logger: Logger) {
+        self.displayName = displayName
+        self.logger = logger
+    }
 }
 
 /// Logs a message using the Swift Unified Logging system and optionally mirrors the message to a custom logging backend (e.g. Crashlytics).
