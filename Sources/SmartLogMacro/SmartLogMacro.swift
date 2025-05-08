@@ -1,6 +1,6 @@
 @_exported import OSLog
 
-public struct LoggerCategory {
+public struct LoggerCategory: Sendable {
     public var displayName: String
     public var logger: Logger
 
